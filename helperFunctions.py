@@ -19,6 +19,15 @@ def get_card_value(card):
         else:
             return 10
 
+def cards_match(cards):
+    cards = []
+    for card in cards:
+        cards.append(remove_symbol(card))
+    if(cards[0] == cards[1]):
+        return True
+    else:
+        return False
+
 def calculate_hand_total(hand):
     total = 0
     for card in hand:
