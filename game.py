@@ -1,6 +1,7 @@
 from deck import Deck
 from dealer import Dealer
 from player import Player
+from helperFunctions import *
 
 def show_hand(cards, hide_one = False):
     if(not hide_one):
@@ -29,8 +30,8 @@ print("Shuffled: ", d.deck)
 
 d.deal_cards([player, dealer])
 
-player.hand_total = d.get_hand_total(player.hand)
-dealer.hand_total = d.get_hand_total(dealer.hand)
+player.hand_total = calculate_hand_total(player.hand)
+dealer.hand_total = calculate_hand_total(dealer.hand)
 
 clear_screen()
 draw_title()

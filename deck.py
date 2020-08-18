@@ -1,12 +1,5 @@
 import random
 
-def check_int(num):
-    try:
-        int(num)
-    except:
-        return False
-    return True
-
 class Deck:
     def __init__(self):
         self.cards = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
@@ -20,22 +13,6 @@ class Deck:
             
     def shuffle_deck(self):
         self.deck = random.sample(self.deck, len(self.deck))
-
-    def get_hand_total(self, hand):
-        total = 0
-        for card in hand:
-            split_card = card.split()
-            if(check_int(split_card[0])):
-                total += int(split_card[0])
-            else:
-                if(split_card[0] == 'A'):
-                    if(total + 11 > 21):
-                        total += 1
-                    else:
-                        total += 11
-                else:
-                    total += 10
-        return total
 
     def deal_cards(self, players):
         for x in range(len(players)):
