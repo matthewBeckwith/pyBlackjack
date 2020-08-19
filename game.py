@@ -3,50 +3,36 @@ from dealer import Dealer
 from player import Player
 from helperFunctions import *
 
-def show_hand(cards, hide_one = False):
-    if(not hide_one):
-        print("\t\t\t    {} {}".format(cards[0], cards[1]))
-    else:
-        print("\t\t\t      {}".format(cards[1]))
-
-def clear_screen(lines = 50):
-    for line in range(lines):
-        print("\n")
-
-def draw_title():
-    print("""
-                    *************************
-                    *                       *
-                    *       BLACKJACK       *
-                    *                       *
-                    *************************
-    """)
-
-def draw_player_options():
-    print("""
-******************************************************************
-*       1. Hit             2. Stay            3. Double Down     *
-*       4. Split           5. Insurance                          *
-******************************************************************
-    """)
-
-d = Deck()
-dealer = Dealer()
+deck = Deck()
 player = Player()
+dealer = Dealer()
 
-d.build_deck()
-d.shuffle_deck()
-d.deal_cards([player, dealer])
+table_options = ["Bet Min", "Bet Max", "Exit"]
+in_game_options = ["Hit", "Stay", "Double Down"]
+alt_options = ["Split", "Insurance"]
 
-player.hand_total = calculate_hand_total(player.hand)
-dealer.hand_total = calculate_hand_total(dealer.hand)
+class Game:
+    def __init__(self):
+        self.deck = deck
+        self.player = player
+        self.dealer = dealer
+        self.current_index = 0
+        self.current_options = table_options
 
-clear_screen()
-draw_title()
-show_hand(dealer.hand, True)
+    def run(self, amount):
+        self.deck.build_deck()
+        self.deck.shuffle_deck()
 
-clear_screen(11)
+        self.player.subtract_money(amount)
+        self.current_options = in_game_options
+        self.current_index = 0
 
-show_hand(player.hand)
+        self.deck.deal_cards([self.player, self.dealer])
 
-draw_player_options()
+        self.player.set_hand_value()
+        self.dealer.set_hand_value()
+
+        if(cards_match(self.player.get_hand())):
+            self.current_options.append(alt_options[0])
+        if(self.dealer.showcard_is_ace()):
+            self.current_options.append(alt_options[1])

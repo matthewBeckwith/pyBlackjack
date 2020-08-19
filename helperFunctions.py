@@ -20,10 +20,10 @@ def get_card_value(card):
             return 10
 
 def cards_match(cards):
-    cards = []
+    cards_no_symbol = []
     for card in cards:
-        cards.append(remove_symbol(card))
-    if(cards[0] == cards[1]):
+        cards_no_symbol.append(remove_symbol(card))
+    if(cards_no_symbol[0] == cards_no_symbol[1]):
         return True
     else:
         return False

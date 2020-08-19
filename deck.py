@@ -17,7 +17,10 @@ class Deck:
     def deal_cards(self, players):
         for x in range(len(players)):
             for player in players:
-                player.hand.append(self.give_card())
+                self.give_card(player)
 
-    def give_card(self):
-        return self.deck.pop(0)
+    def give_card(self, player):
+        return player.put_card_in_hand(self.deck.pop(0))
+
+    def get_deck(self):
+        return self.deck
